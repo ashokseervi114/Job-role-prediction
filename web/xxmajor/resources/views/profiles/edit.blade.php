@@ -23,6 +23,7 @@
 						<label for="fullname">Full Name</label>
 						<input type="text" name="fullname" class="form-control" id="fullname" placeholder="Full Name" value="">
 					</div>
+					<h2 class="username">{{ $profilesUser->fullname }}</h2>
 					<div class="form-row">
 						<!--
 							<div class="form-group col-md-6">
@@ -38,6 +39,7 @@
 							<label for="fathername">Father's Name</label>
 							<input type="text" name="fathername" class="form-control" id="fathername" placeholder="Father's Name" value="">
 						</div>
+
 						<div class="form-group col-md-6">
 							<label for="mothername">Mother's Name</label>
 							<input type="text" name="mothername" class="form-control" id="mothername" placeholder="Mother's Name" value="">

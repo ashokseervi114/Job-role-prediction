@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\User;
 use App\Profile;
 use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,7 @@ class ProfilesController extends Controller
      */
     public function index(Profile $profile, User $user)
     {
-        return view('profiles.profile', [
+        return view('profiles.show', [
                 'profileUser' => $user,
                 'profilesUser' => $profile
             ]);
@@ -50,7 +55,28 @@ class ProfilesController extends Controller
             'address_state' => 'required',
             'address_zip' => 'required',
         ]);
-        $profile = Profile::create([
+        // $testall = collect([
+        //     'user_id' => auth()->id(),
+        //     'fullname' => request('fullname'),
+        //     'fathername' => request('fathername'),
+        //     'mothername' => request('mothername'),
+        //     'college' => request('college'),
+        //     'address_line_one' => request('address_line_one'),
+        //     'address_line_two' => request('address_line_two'),
+        //     'address_city' => request('address_city'),
+        //     'address_state' => request('address_state'),
+        //     'address_zip' => request('address_zip'),
+        // ]);
+
+        // dd($testall);
+        $user_id = auth()->id();
+        $profilet = DB::table('profiles')->where('user_id', $user_id)->first();
+
+        if($profilet) {
+            // return view('profiles.update');
+            dd($profilet);
+        } else {
+            $profile = Profile::create([
             'user_id' => auth()->id(),
             'fullname' => request('fullname'),
             'fathername' => request('fathername'),
@@ -61,9 +87,9 @@ class ProfilesController extends Controller
             'address_city' => request('address_city'),
             'address_state' => request('address_state'),
             'address_zip' => request('address_zip'),
-        ]);
-
-        return view('profiles.show');
+            ]);
+        }
+        return view('profiles.update');
         // return redirect($profile->path());
     }
 
@@ -75,7 +101,7 @@ class ProfilesController extends Controller
      */
     public function show(Profile $profile, User $user)
     {
-        return view('profiles.show', [
+        return view('profiles.profile', [
                 'profileUser' => $user,
                 'profilesUser' => $profile
             ]);
@@ -87,9 +113,12 @@ class ProfilesController extends Controller
      * @param  \App\Profiles  $profiles
      * @return \Illuminate\Http\Response
      */
-    public function edit(Profile $profiles)
+    public function edit(Profile $profile, User $user)
     {
-        //
+        return view('profiles.edit', [
+            'profileUser' => $user,
+            'profilesUser' => $profile
+        ]);
     }
 
     /**

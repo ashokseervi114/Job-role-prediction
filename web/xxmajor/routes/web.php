@@ -22,6 +22,11 @@ Auth::routes();
 // });
 Route::get('/', 'HomeController@show')->name('index');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/profile/{user}', 'ProfilesController@show')->name('profile');
+
+// Route::get('/profiles/{user}/detail', 'ProfilesController@index')->name('profile-detail');
+Route::get('/profiles/{user}', 'ProfilesController@index')->name('profile');
 Route::get('/profiles/create', 'ProfilesController@create')->name('profile-create');
-Route::get('/profiles/{user}/detail', 'ProfilesController@index')->name('profile-detail');
+Route::post('/profiles', 'ProfilesController@store');
+Route::get('/profiles/{user}/detail', 'ProfilesController@show')->name('profile-detail');
+Route::get('profiles/{user}/edit', 'ProfilesController@edit');
+
